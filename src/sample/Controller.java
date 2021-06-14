@@ -596,9 +596,11 @@ public class Controller implements Initializable {
         bleeds.setSmooth(false);
 
         if (izklVeids.equals("Apvērsiens")) {
+            double subjectWidth;
+            double subjectHeight;
             if (!rotated) {
-                double subjectWidth = width * 2 * countX + bleed * 2 * (countX - 1);
-                double subjectHeight = (height * 2 + headSpace) * countY + bleed * 2 * (countY - 1);
+                subjectWidth = width * 2 * countX + bleed * 2 * (countX - 1);
+                subjectHeight = (height * 2 + headSpace) * countY + bleed * 2 * (countY - 1);
                 // pirmā puse
                 fields1.setX(((750 - subjectWidth) / 2) + width * 2 * i + bleed * 2 * i);
                 fields1.setY((550 - paperY) + (paperY - subjectHeight) / 2 +
@@ -633,11 +635,10 @@ public class Controller implements Initializable {
                 bleeds.setY(fields1.getY() - bleed);
                 bleeds.setWidth(fields1.getWidth() + 2 * bleed);
                 bleeds.setHeight(fields1.getHeight() * 2 + 2 * bleed + headSpace);
-                paper.getChildren().add(bleeds);
 
             } else { // divloce, pagriezta un apvērsienā
-                double subjectWidth = (height * 2 + headSpace + bleed * 2) * countX - bleed * 2;
-                double subjectHeight = width * 2 * countY + bleed * 2 * countY- bleed * 2;
+                subjectWidth = (height * 2 + headSpace + bleed * 2) * countX - bleed * 2;
+                subjectHeight = width * 2 * countY + bleed * 2 * countY - bleed * 2;
 
                 // rāmji pirmā puse
                 fields1.setX(((750 - subjectWidth) / 2) + (height * 2 + headSpace) * i + bleed * 2 * i);
@@ -673,10 +674,10 @@ public class Controller implements Initializable {
                 bleeds.setY(fields1.getY() - bleed);
                 bleeds.setWidth(fields1.getWidth() * 2 + 2 * bleed + headSpace);
                 bleeds.setHeight(fields1.getHeight() + 2 * bleed);
-                paper.getChildren().add(bleeds);
             }
+            paper.getChildren().add(bleeds);
 
-        // parasta divloce vai apmetienā
+            // parasta divloce vai apmetienā
         } else {
             if (!rotated) {
                 double subjectWidth = width * 2 * countX + bleed * 2 * (countX - 1);
