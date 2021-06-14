@@ -3,7 +3,7 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
+//import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -165,7 +165,7 @@ public class Controller implements Initializable {
                 augstumsY.setStyle("-fx-text-inner-color: black");
             }
 
-            bleed = (int) uzlaides.getValue();
+            bleed = uzlaides.getValue();
             if ((shemasVeids.equals("Vienloce") && bleed < 3) || (shemasVeids.equals("Divloce") && bleed < 3)) {
                 uzlaides.getValueFactory().setValue(3);
             } else {
@@ -242,7 +242,7 @@ public class Controller implements Initializable {
                             countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
                             countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + width));
                         }
-                        if (izklVeids.equals("Apvērsiens") && countY % 2 == 1) countY--;
+                        if (countY % 2 == 1) countY--;
 
                         break;
                     case "Apmetiens":
@@ -363,32 +363,36 @@ public class Controller implements Initializable {
             break;
 
             case "Vienloce":
-                if (izklVeids.equals("")){
-                    if (!rotated) {
-                        countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
-                        countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
-                    } else {
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                        countY = (int) ((paperY - firstCut - upperMargin) / (2 * bleed + 2 * width));
-                    }
-                } else if (izklVeids.equals("Apmetiens")) {
-                    if (!rotated) {
-                        countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
-                        countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
-                    } else {
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                        countY = (int) ((paperY - firstCut - upperMargin) / (2 * bleed + 2 * width));
-                    }
-                    if (countX % 2 == 1) countX--;
-                } else if (izklVeids.equals("Apvērsiens")) {
-                    if (!rotated) {
-                        countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
-                        countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + height));
-                    } else {
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                        countY = (int) ((paperY - firstCut * 2 - upperMargin) / (2 * bleed + 2 * width));
-                    }
-                    if (countY%2 == 1) countY--;
+                switch (izklVeids) {
+                    case "":
+                        if (!rotated) {
+                            countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
+                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                        } else {
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                            countY = (int) ((paperY - firstCut - upperMargin) / (2 * bleed + 2 * width));
+                        }
+                        break;
+                    case "Apmetiens":
+                        if (!rotated) {
+                            countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
+                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                        } else {
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                            countY = (int) ((paperY - firstCut - upperMargin) / (2 * bleed + 2 * width));
+                        }
+                        if (countX % 2 == 1) countX--;
+                        break;
+                    case "Apvērsiens":
+                        if (!rotated) {
+                            countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
+                            countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + height));
+                        } else {
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                            countY = (int) ((paperY - firstCut * 2 - upperMargin) / (2 * bleed + 2 * width));
+                        }
+                        if (countY % 2 == 1) countY--;
+                        break;
                 }
                 kopa.setText(Integer.toString(countX * countY));
 
