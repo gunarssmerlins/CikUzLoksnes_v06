@@ -67,10 +67,10 @@
         <Label text="Darba izmērs" GridPane.rowIndex="1" />
         <Label text="Uzlaides" GridPane.rowIndex="2" />
         <!--                <Label text="-" GridPane.rowIndex="4" />-->
-        <TextField fx:id="loksneX" onAction="#generalActionRequest" onKeyPressed="#generalActionRequest" onKeyReleased="#generalActionRequest" onKeyTyped="#generalActionRequest" promptText="platums, mm" text="640" GridPane.columnIndex="1" />
-        <TextField fx:id="loksneY" onAction="#generalActionRequest" onKeyPressed="#generalActionRequest" onKeyReleased="#generalActionRequest" onKeyTyped="#generalActionRequest" promptText="augstums, mm" text="460" GridPane.columnIndex="2" />
-        <TextField fx:id="platumsX" onAction="#generalActionRequest" onKeyPressed="#generalActionRequest" onKeyReleased="#generalActionRequest" onKeyTyped="#generalActionRequest" promptText="platums, mm" text="90" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <TextField fx:id="augstumsY" promptText="augstums, mm" text="50" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <TextField fx:id="loksneX" onAction="#generalActionRequest" onInputMethodTextChanged="#generalActionRequest" onKeyReleased="#generalActionRequest" promptText="platums, mm" text="640" GridPane.columnIndex="1" />
+        <TextField fx:id="loksneY" onAction="#generalActionRequest" onInputMethodTextChanged="#generalActionRequest" onKeyReleased="#generalActionRequest" promptText="augstums, mm" text="460" GridPane.columnIndex="2" />
+        <TextField fx:id="platumsX" onAction="#generalActionRequest" onInputMethodTextChanged="#generalActionRequest" onKeyReleased="#generalActionRequest" promptText="platums, mm" text="90" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="augstumsY" onInputMethodTextChanged="#generalActionRequest" onKeyReleased="#generalActionRequest" promptText="augstums, mm" text="50" GridPane.columnIndex="2" GridPane.rowIndex="1" />
         <Spinner fx:id="uzlaides" editable="true" initialValue="2" max="100" min="0" onKeyPressed="#generalActionRequest" onMouseClicked="#generalActionRequest" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="2" />
         <CheckBox fx:id="pagriezts" mnemonicParsing="false" onAction="#isRotated" onMouseClicked="#generalActionRequest" text="Pagriezt par 90°" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
         <Label prefHeight="18.0" prefWidth="178.0" text="Pirmais grieziens" GridPane.rowIndex="5" />
