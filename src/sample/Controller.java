@@ -223,42 +223,46 @@ public class Controller implements Initializable {
 
         switch (shemasVeids) {
             case "1up":
-                if (izklVeids.equals("")){
-                    if (!rotated) { // ja nav pagriezts
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
-                        countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
-                    } else { // ja ir pagriezts
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                        countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
-                    }
+                switch (izklVeids) {
+                    case "":
+                        if (!rotated) { // ja nav pagriezts
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                        } else { // ja ir pagriezts
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+                        }
 
-                } else if (izklVeids.equals("Apvērsiens")) {
-                    if (!rotated) { // ja nav pagriezts
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
-                        countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + height));
-                    } else { // ja ir pagriezts
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                        countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + width));
-                    }
-                    if (izklVeids.equals("Apvērsiens") && countY%2 == 1) countY--;
+                        break;
+                    case "Apvērsiens":
+                        if (!rotated) { // ja nav pagriezts
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                            countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + height));
+                        } else { // ja ir pagriezts
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                            countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + width));
+                        }
+                        if (izklVeids.equals("Apvērsiens") && countY % 2 == 1) countY--;
 
-                } else if (izklVeids.equals("Apmetiens")){
-                    if (!rotated) { // ja nav pagriezts
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
-                        countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
-                    } else { // ja ir pagriezts
-                        countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                        countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
-                    }
-                    if (countX % 2 == 1) countX--;
+                        break;
+                    case "Apmetiens":
+                        if (!rotated) { // ja nav pagriezts
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                        } else { // ja ir pagriezts
+                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+                        }
+                        if (countX % 2 == 1) countX--;
+                        break;
                 }
 
                 kopa.setText(Integer.toString(countX * countY));
 
-                DropShadow ds = new DropShadow();
-                ds.setOffsetX(0.0f);
-                ds.setOffsetY(0.0f);
-                ds.setColor(Color.color(0.2f, 0.2f, 0.2f));
+//                DropShadow ds = new DropShadow();
+//                ds.setOffsetX(0.0f);
+//                ds.setOffsetY(0.0f);
+//                ds.setColor(Color.color(0.2f, 0.2f, 0.2f));
 
                 //cikls zīmē rāmjus
                 for (int i = 0; i < countX; i++) {
@@ -268,7 +272,7 @@ public class Controller implements Initializable {
                         t.setFont(Font.font ("Verdana", 14));
                         t.setFill(Color.RED);
                         t.setFontSmoothingType(FontSmoothingType.LCD);
-                        t.setEffect(ds);
+//                        t.setEffect(ds);
 
                         Rectangle fields = new Rectangle();
                         fields.setStroke(Color.BLACK);
