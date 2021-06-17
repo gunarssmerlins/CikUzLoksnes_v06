@@ -300,6 +300,15 @@ public class Controller implements Initializable {
                                 bleeds.setY(fields.getY() - bleed);
                                 bleeds.setWidth(fields.getWidth() + bleed * 2);
                                 bleeds.setHeight(fields.getHeight() + bleed * 2);
+                                if (j >= countY / 2) {
+                                    t.setRotate(0);
+                                    t.setText("A");
+                                } else {
+                                    t.setRotate(180);
+                                    t.setText("B");
+                                }
+                                t.setX(fields.getX() + fields.getWidth() / 2 - 3);
+                                t.setY(fields.getY() + fields.getHeight() / 2 + 5);
                             } else { // ja rotēts apvērsiens
                                 fields.setX((750 - (height * countX + 2 * bleed * (countX - 1))) / 2 +
                                         height * i + bleed * 2 * i);
@@ -312,6 +321,16 @@ public class Controller implements Initializable {
                                 bleeds.setY(fields.getY() - bleed);
                                 bleeds.setWidth(fields.getWidth() + bleed * 2);
                                 bleeds.setHeight(fields.getHeight() + bleed * 2);
+
+                                if (j >= countY / 2) {
+                                    t.setRotate(90);
+                                    t.setText("A");
+                                } else {
+                                    t.setRotate(90);
+                                    t.setText("B");
+                                }
+                                t.setX(fields.getX() + fields.getWidth() / 2 - 3);
+                                t.setY(fields.getY() + fields.getHeight() / 2 + 5);
                             }
                         } else { // parasts 1up izklājums
                             if(izklVeids.equals("Apmetiens") && i < countX / 2) t.setText("A");
