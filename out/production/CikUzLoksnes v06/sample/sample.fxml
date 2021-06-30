@@ -36,7 +36,7 @@
             <MenuItem mnemonicParsing="false" onAction="#set320x450" text="320x450" />
         </Menu>
     </MenuBar>
-    <GridPane hgap="5.0" layoutX="-86.0" layoutY="118.0" minWidth="300.0" prefWidth="300.0" vgap="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+    <GridPane fx:id="gribBoxFX" hgap="5.0" layoutX="-86.0" layoutY="118.0" minWidth="300.0" prefWidth="300.0" vgap="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="110.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="79.0" />
@@ -92,13 +92,13 @@
                 <Font name="System Regular" size="14.0" />
             </font>
         </Label>
-        <Label text="gunars .smerlins@gmail.com" GridPane.columnSpan="2147483647" GridPane.rowIndex="14">
+        <Label text="gunars.smerlins@gmail.com" GridPane.columnSpan="2147483647" GridPane.rowIndex="14">
             <font>
                 <Font size="11.0" />
             </font>
         </Label>
 
-        <RadioButton mnemonicParsing="false" onAction="#shemasVeids" selected="true" text="1up" GridPane.columnIndex="2" GridPane.rowIndex="5">
+        <RadioButton fx:id="oneUpFX" mnemonicParsing="false" onAction="#shemasVeids" selected="true" text="1up" GridPane.columnIndex="2" GridPane.rowIndex="5">
             <toggleGroup>
                 <ToggleGroup fx:id="shema" />
             </toggleGroup></RadioButton>

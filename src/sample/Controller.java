@@ -3,8 +3,8 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-//import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -34,6 +34,7 @@ public class Controller implements Initializable {
     @FXML private ToggleGroup shema;
     @FXML private Label kpd;
     @FXML private ComboBox apmApversFX;
+    @FXML private GridPane gridBoxFX;
 
     boolean isFieldsDrawn = false;
     boolean rotated = false;
@@ -51,6 +52,7 @@ public class Controller implements Initializable {
     String izklVeids = "";
     String[] krasa = {"BLACK", "RED", "GREEN", "YELLOW", "LIME", "BLUE", "CYAN", "MAGENTA", "OLIVE", "PURPLE",
             "TEAL", "NAVY", "BEIGE", "BLUEVIOLET"};
+    String[] lapasNr = {"4", "1", "2", "3"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -259,11 +261,6 @@ public class Controller implements Initializable {
 
                 kopa.setText(Integer.toString(countX * countY));
 
-//                DropShadow ds = new DropShadow();
-//                ds.setOffsetX(0.0f);
-//                ds.setOffsetY(0.0f);
-//                ds.setColor(Color.color(0.2f, 0.2f, 0.2f));
-
                 //cikls zīmē rāmjus
                 for (int i = 0; i < countX; i++) {
                     for (int j = 0; j < countY; j++) {
@@ -272,7 +269,6 @@ public class Controller implements Initializable {
                         t.setFont(Font.font ("Verdana", 14));
                         t.setFill(Color.RED);
                         t.setFontSmoothingType(FontSmoothingType.LCD);
-//                        t.setEffect(ds);
 
                         Rectangle fields = new Rectangle();
                         fields.setStroke(Color.BLACK);
@@ -324,7 +320,7 @@ public class Controller implements Initializable {
 
                                 if (j >= countY / 2) {
                                     t.setRotate(90);
-                                    t.setText("A");
+                                    t.setText(" A ");
                                 } else {
                                     t.setRotate(90);
                                     t.setText("B");
@@ -422,6 +418,7 @@ public class Controller implements Initializable {
                         Rectangle fields = new Rectangle();
                         fields.setStroke(Color.BLACK);
                         fields.setFill(Color.LIGHTGRAY);
+                        fields.setFill(Color.TRANSPARENT);
                         fields.setStrokeWidth(2);
                         fields.setSmooth(false);
 
@@ -483,6 +480,13 @@ public class Controller implements Initializable {
                                 fold.setStartY(fields.getY());
                                 fold.setEndX(fold.getStartX());
                                 fold.setEndY(fields.getY() + height);
+
+                                for (int k = 0; k < 2; k++) {
+                                    paper.getChildren().add(new Text(
+                                            fields.getX() + fields.getWidth() / 4 - 3 + fields.getWidth() / 2 * k,
+                                            fields.getY() + fields.getHeight() / 2 + 4,
+                                            lapasNr[k]));
+                                }
                             } else {
                                 fields.setX(((750 - (height * countX + 2 * bleed * (countX - 1))) / 2) +
                                         height * i + bleed * 2 * i);
