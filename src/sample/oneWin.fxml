@@ -19,9 +19,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <MenuBar layoutY="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Menu mnemonicParsing="true" text="Loksnes izmēri">
             <MenuItem mnemonicParsing="false" onAction="#set640x450" text="640x450" />
@@ -36,7 +35,7 @@
             <MenuItem mnemonicParsing="false" onAction="#set320x450" text="320x450" />
         </Menu>
     </MenuBar>
-    <GridPane fx:id="gribBoxFX" hgap="5.0" layoutX="-86.0" layoutY="118.0" minWidth="300.0" prefWidth="300.0" vgap="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+    <GridPane fx:id="gribBoxFX" hgap="5.0" minWidth="300.0" prefWidth="300.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="32.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="110.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="79.0" />
@@ -64,11 +63,14 @@
             <RowConstraints />
         </rowConstraints>
         <Label text="Loksnes izmērs" />
+
         <Label text="Darba izmērs" GridPane.rowIndex="1" />
         <Label text="Uzlaides" GridPane.rowIndex="2" />
         <!--                <Label text="-" GridPane.rowIndex="4" />-->
         <TextField fx:id="loksneX" onAction="#generalActionRequest" onInputMethodTextChanged="#generalActionRequest" onKeyReleased="#generalActionRequest" promptText="platums, mm" text="640" GridPane.columnIndex="1" />
+
         <TextField fx:id="loksneY" onAction="#generalActionRequest" onInputMethodTextChanged="#generalActionRequest" onKeyReleased="#generalActionRequest" promptText="augstums, mm" text="460" GridPane.columnIndex="2" />
+
         <TextField fx:id="platumsX" onAction="#generalActionRequest" onInputMethodTextChanged="#generalActionRequest" onKeyReleased="#generalActionRequest" promptText="platums, mm" text="90" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <TextField fx:id="augstumsY" onInputMethodTextChanged="#generalActionRequest" onKeyReleased="#generalActionRequest" promptText="augstums, mm" text="50" GridPane.columnIndex="2" GridPane.rowIndex="1" />
         <Spinner fx:id="uzlaides" editable="true" initialValue="2" max="100" min="0" onKeyPressed="#generalActionRequest" onMouseClicked="#generalActionRequest" GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="2" />
@@ -79,24 +81,14 @@
         <Label text="Augšmala" GridPane.rowIndex="7" />
         <TextField fx:id="sanuMala" onAction="#generalActionRequest" onKeyPressed="#generalActionRequest" onKeyReleased="#generalActionRequest" onKeyTyped="#generalActionRequest" text="5" GridPane.columnIndex="1" GridPane.rowIndex="6" />
         <TextField fx:id="augsMala" onAction="#generalActionRequest" onKeyPressed="#generalActionRequest" onKeyReleased="#generalActionRequest" onKeyTyped="#generalActionRequest" text="5" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-        <Label text="Kopā:" GridPane.rowIndex="10">
-            <font> <Font name="System Bold" size="18.0" /> </font>
-        </Label>
-        <Label fx:id="kopa" prefHeight="27.0" prefWidth="84.0" text="Enter!" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="10">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font>
-        </Label>
-        <Label fx:id="kpd" prefHeight="27.0" prefWidth="279.0" text="Laukuma izlietojums:" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="11">
-            <font>
-                <Font name="System Regular" size="14.0" />
-            </font>
-        </Label>
-        <Label text="gunars.smerlins@gmail.com" GridPane.columnSpan="2147483647" GridPane.rowIndex="14">
-            <font>
-                <Font size="11.0" />
-            </font>
-        </Label>
+        <Label text="Kopā:" GridPane.rowIndex="10" />
+
+        <Label fx:id="kopa" prefHeight="27.0" prefWidth="84.0" text="Enter!" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+
+        <Label fx:id="kpd" prefHeight="27.0" prefWidth="279.0" text="Laukuma izlietojums:" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2147483647" GridPane.rowIndex="11" />
+
+        <Label text="gunars.smerlins@gmail.com" GridPane.columnSpan="2147483647" GridPane.rowIndex="14" />
+
 
         <RadioButton fx:id="oneUpFX" mnemonicParsing="false" onAction="#shemasVeids" selected="true" text="1up" GridPane.columnIndex="2" GridPane.rowIndex="5">
             <toggleGroup>

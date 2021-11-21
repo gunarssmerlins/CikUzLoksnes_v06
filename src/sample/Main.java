@@ -12,11 +12,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("oneWin.fxml"));
         primaryStage.setTitle("Cik uz loksnes?");
-        primaryStage.setScene(new Scene(root, 1060, 590, Color.ROYALBLUE));
+        Scene skats = new Scene(root, 1060, 590, Color.ROYALBLUE);
+        primaryStage.setScene(skats);
+        skats.getStylesheets().add("sample/stylesheet.css");
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("file:CikDaudz.bmp"));
+
         primaryStage.show();
     }
 

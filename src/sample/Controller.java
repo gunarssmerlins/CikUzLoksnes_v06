@@ -141,14 +141,15 @@ public class Controller implements Initializable {
         });
     }
 
+    // galvenā funkcija
     public void generalActionRequest() {
         m = 0;
-        getFields();
+        getFields();    //nolasa laukus
         if (isFieldsDrawn) {
             paper.getChildren().clear();
         }
-        drawFields();
-        areaUsage();
+        drawFields();   //zīmē laukus
+        areaUsage();    //sarēķina laukuma izlietojumu JFF
         isFieldsDrawn = true;
     }
 
@@ -234,8 +235,8 @@ public class Controller implements Initializable {
                             countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
                             countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
                         }
-
                         break;
+
                     case "Apvērsiens":
                         if (!rotated) { // ja nav pagriezts
                             countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
@@ -245,8 +246,8 @@ public class Controller implements Initializable {
                             countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + width));
                         }
                         if (countY % 2 == 1) countY--;
-
                         break;
+
                     case "Apmetiens":
                         if (!rotated) { // ja nav pagriezts
                             countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
