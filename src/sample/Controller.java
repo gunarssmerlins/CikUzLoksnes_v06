@@ -11,6 +11,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontSmoothingType;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.net.URL;
@@ -25,6 +26,7 @@ public class Controller implements Initializable {
     @FXML private TextField loksneY;
     @FXML private TextField platumsX;
     @FXML private TextField augstumsY;
+    @FXML private CheckBox maxNumber;
     @FXML private CheckBox pagriezts;
     @FXML private Pane paper;
     @FXML private TextField pirmGrieziens;
@@ -35,9 +37,12 @@ public class Controller implements Initializable {
     @FXML private Label kpd;
     @FXML private ComboBox apmApversFX;
     @FXML private GridPane gridBoxFX;
+    @FXML private Label loksneFX;
+    @FXML private Label uzlaidesFX;
 
     boolean isFieldsDrawn = false;
-    boolean rotated = false;
+    boolean maxFil = false;
+    boolean isRotated = false;
     int countX, countY;
     double bleed;
     double paperX, paperY;
@@ -48,6 +53,8 @@ public class Controller implements Initializable {
     double headSpace;
     int usedArea;
     int m; //krāsas indekss
+    int countX1, countY1, countX2, countY2;
+
     String shemasVeids = "1up";
     String izklVeids = "";
     String[] krasa = {"BLACK", "RED", "GREEN", "YELLOW", "LIME", "BLUE", "CYAN", "MAGENTA", "OLIVE", "PURPLE",
@@ -56,6 +63,30 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        int fontSize = 12;
+
+        loksneFX.setStyle("-fx-font: 14px \"Arial\";");
+        uzlaidesFX.setStyle("-fx-font: 14px \"Arial\";");
+        uzlaides.setStyle("-fx-font: 12px \"Arial\";");
+        loksneX.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        loksneY.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        platumsX.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        augstumsY.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        maxNumber.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        pagriezts.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+//        paper.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        pirmGrieziens.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        sanuMala.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        augsMala.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        kopa.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+//        shema.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+        kpd.setFont(Font.font("Arial", FontWeight.NORMAL, fontSize));
+//        apmApversFX.setStyle("-fx-font: 12px \"Arial\";");
+//        gridBoxFX.setStyle("-fx-font: 12px \"Arial\";");
+
+        maxNumber.setSelected(true);
+        pagriezts.setDisable(true);
+
         generalActionRequest();
 
         Tooltip tt = new Tooltip("Var lietot bultiņas uz augšu/leju");
@@ -75,7 +106,7 @@ public class Controller implements Initializable {
             generalActionRequest();
         });
 
-
+        //
         platumsX.setOnKeyPressed((actionEvent)  -> {
             if(actionEvent.getCode() == KeyCode.UP){
                 platumsX.setText(String.valueOf(Integer.parseInt(platumsX.getText()) + 1));
@@ -168,6 +199,10 @@ public class Controller implements Initializable {
                 augstumsY.setStyle("-fx-text-inner-color: black");
             }
 
+            maxFil = maxNumber.isSelected();
+
+            isRotated = pagriezts.isSelected();
+
             bleed = uzlaides.getValue();
             if ((shemasVeids.equals("Vienloce") && bleed < 3) || (shemasVeids.equals("Divloce") && bleed < 3)) {
                 uzlaides.getValueFactory().setValue(3);
@@ -224,37 +259,94 @@ public class Controller implements Initializable {
         platesRamis();
         loksnesRamis((750 - paperX)/2, paperX, paperY);
 
+        // skaitam cik uz loksnes
         switch (shemasVeids) {
             case "1up":
                 switch (izklVeids) {
                     case "":
-                        if (!rotated) { // ja nav pagriezts
-                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
-                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
-                        } else { // ja ir pagriezts
-                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+                        //skaits norm veidā
+                        countX1 = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                        countY1 = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                        //skaits pagrieztā veidā
+                        countX2 = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                        countY2 = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+
+                        if (maxFil){
+                            if (countX1*countY1 >= countX2*countY2){
+                                isRotated = false;
+                                countX = countX1;
+                                countY = countY1;
+                            } else {
+                                isRotated = true;
+                                countX = countX2;
+                                countY = countY2;
+                            }
+                        } else {
+                            if (!isRotated){
+                                countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                                countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                            } else {
+                                countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                                countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+                            }
                         }
-                        break;
+                    break;
 
                     case "Apvērsiens":
-                        if (!rotated) { // ja nav pagriezts
-                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
-                            countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + height));
-                        } else { // ja ir pagriezts
-                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                            countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + width));
+                        //skaits norm veidā
+                        countX1 = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                        countY1 = (int) ((paperY - 2 * firstCut + 2 * bleed) / (2 * bleed + height));
+                        //skaits pagrieztā veidā
+                        countX2 = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                        countY2 = (int) ((paperY - 2 * firstCut + 2 * bleed) / (2 * bleed + width));
+
+                        if (maxFil){
+                            if (countX1*countY1 >= countX2*countY2){
+                                isRotated = false;
+                                countX = countX1;
+                                countY = countY1;
+                            } else {
+                                isRotated = true;
+                                countX = countX2;
+                                countY = countY2;
+                            }
+                        } else {
+                            if (!isRotated){
+                                countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                                countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                            } else {
+                                countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                                countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+                            }
                         }
                         if (countY % 2 == 1) countY--;
                         break;
 
                     case "Apmetiens":
-                        if (!rotated) { // ja nav pagriezts
-                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
-                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
-                        } else { // ja ir pagriezts
-                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+                        //skaits norm veidā
+                        countX1 = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                        countY1 = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                        //skaits pagrieztā veidā
+                        countX2 = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                        countY2 = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+                        if (maxFil){
+                            if (countX1*countY1 >= countX2*countY2){
+                                isRotated = false;
+                                countX = countX1;
+                                countY = countY1;
+                            } else {
+                                isRotated = true;
+                                countX = countX2;
+                                countY = countY2;
+                            }
+                        } else {
+                            if (!isRotated){
+                                countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + width));
+                                countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                            } else {
+                                countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                                countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + width));
+                            }
                         }
                         if (countX % 2 == 1) countX--;
                         break;
@@ -285,7 +377,7 @@ public class Controller implements Initializable {
                         bleeds.setSmooth(false);
 
                         if (izklVeids.equals("Apvērsiens")) {
-                            if (!rotated) { // ja ir nerotēts apvērsiens
+                            if (!isRotated) { // ja ir nerotēts apvērsiens
                                 fields.setX((750 - (width * countX + 2 * bleed * (countX - 1))) / 2 +
                                         width * i + bleed * 2 * i);
                                 fields.setY(550 - paperY + (paperY - (((height + 2 * bleed) * countY) - 2 * bleed)) / 2
@@ -333,7 +425,7 @@ public class Controller implements Initializable {
                             if(izklVeids.equals("Apmetiens") && i < countX / 2) t.setText("A");
                             if(izklVeids.equals("Apmetiens") && i >= countX / 2) t.setText("B");
 
-                            if (!rotated) {
+                            if (!isRotated) { //nav pagriezts
                                 fields.setX((750 - (width * countX + 2 * bleed * (countX - 1))) / 2 +
                                         width * i + bleed * 2 * i);
                                 fields.setY(550 - height * countY - 2 * bleed * (countY - 1) -
@@ -348,7 +440,7 @@ public class Controller implements Initializable {
 
                                 t.setX(fields.getX() + fields.getWidth() / 2 - 3);
                                 t.setY(fields.getY() + fields.getHeight() / 2 + 5);
-                            } else {
+                            } else { //pagriezts
                                 fields.setX(((750 - (height * countX + 2 * bleed * (countX - 1))) / 2) +
                                         height * i + bleed * 2 * i);
                                 fields.setY(550 - width * countY - 2 * bleed * (countY - 1) -
@@ -381,16 +473,35 @@ public class Controller implements Initializable {
             case "Vienloce":
                 switch (izklVeids) {
                     case "":
-                        if (!rotated) {
-                            countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
-                            countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                        //skaits norm veidā
+                        countX1 = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
+                        countY1 = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                        //skaits pagr veidā
+                        countX2 = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                        countY2 = (int) ((paperY - firstCut - upperMargin) / (2 * bleed + 2 * width));
+///////////////
+                        if (maxFil){
+                            if (countX1*countY1 >= countX2*countY2){
+                                isRotated = false;
+                                countX = countX1;
+                                countY = countY1;
+                            } else {
+                                isRotated = true;
+                                countX = countX2;
+                                countY = countY2;
+                            }
                         } else {
-                            countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
-                            countY = (int) ((paperY - firstCut - upperMargin) / (2 * bleed + 2 * width));
+                            if (!isRotated){
+                                countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
+                                countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
+                            } else {
+                                countX = (int) ((paperX - 2 * sideMargin) / (2 * bleed + height));
+                                countY = (int) ((paperY - firstCut - upperMargin) / (2 * bleed + 2 * width));
+                            }
                         }
                         break;
                     case "Apmetiens":
-                        if (!rotated) {
+                        if (!isRotated) {
                             countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
                             countY = (int) ((paperY - firstCut - upperMargin + 2 * bleed) / (2 * bleed + height));
                         } else {
@@ -400,7 +511,7 @@ public class Controller implements Initializable {
                         if (countX % 2 == 1) countX--;
                         break;
                     case "Apvērsiens":
-                        if (!rotated) {
+                        if (!isRotated) {
                             countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
                             countY = (int) ((paperY - firstCut * 2 - upperMargin + bleed) / (2 * bleed + height));
                         } else {
@@ -437,7 +548,7 @@ public class Controller implements Initializable {
                         fold.setSmooth(false);
 
                         if (izklVeids.equals("Apvērsiens")) {
-                            if (!rotated) { // ja vienloce apvērsienā
+                            if (!isRotated) { // ja vienloce apvērsienā
                                 //rāmju koordinātas
                                 fields.setX(((750 - (width * 2 * countX + bleed * 2 * (countX - 1))) / 2)
                                         + width * 2 * i + bleed * 2 * i);
@@ -467,7 +578,7 @@ public class Controller implements Initializable {
                             }
 
                         } else if (izklVeids.equals("") || izklVeids.equals("Apmetiens")) {
-                            if (!rotated) {
+                            if (!isRotated) {
                                 //rāmju koordinātas
                                 fields.setX(((750 - (width * 2 * countX + bleed * 2 * (countX - 1))) / 2)
                                         + width * 2 * i + bleed * 2 * i);
@@ -519,7 +630,7 @@ public class Controller implements Initializable {
 
             case "Divloce":
                 if (izklVeids.equals("Apvērsiens")) {
-                    if (!rotated) {
+                    if (!isRotated) {
                         countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
                         countY = (int) ((paperY - firstCut * 2 - upperMargin + 2 * bleed) / (2 * bleed + headSpace + 2 * height));
                     } else {
@@ -530,7 +641,7 @@ public class Controller implements Initializable {
                     if (countY % 2 == 1) countY--;
 
                 } else {
-                    if (!rotated) {
+                    if (!isRotated) {
                         countX = (int) ((paperX - 2 * sideMargin) / (3 * bleed + 2 * width));
                         countY = (int) ((paperY - firstCut - upperMargin + bleed) / (2 * bleed + headSpace + 2 * height));
                     } else {
@@ -583,8 +694,21 @@ public class Controller implements Initializable {
         generalActionRequest();
     }
 
+    public void isMaxFilRequested() {
+        maxFil = maxNumber.isSelected();
+        if (maxFil){
+//            pagriezts.setSelected(false);
+            pagriezts.setDisable(true);
+        } else {
+            pagriezts.setDisable(false);
+        }
+        if (!maxFil) isRotated();
+        generalActionRequest();
+    }
+
     public void isRotated() {
-        rotated = pagriezts.isSelected();
+        isRotated = pagriezts.isSelected();
+        System.out.println("Pagriezts statuss: " + isRotated);
         generalActionRequest();
     }
 
@@ -622,7 +746,7 @@ public class Controller implements Initializable {
         if (izklVeids.equals("Apvērsiens")) {
             double subjectWidth;
             double subjectHeight;
-            if (!rotated) {
+            if (!isRotated) {
                 subjectWidth = width * 2 * countX + bleed * 2 * (countX - 1);
                 subjectHeight = (height * 2 + headSpace) * countY + bleed * 2 * (countY - 1);
                 // pirmā puse
@@ -703,7 +827,7 @@ public class Controller implements Initializable {
 
             // parasta divloce vai apmetienā
         } else {
-            if (!rotated) {
+            if (!isRotated) {
                 double subjectWidth = width * 2 * countX + bleed * 2 * (countX - 1);
                 double subjectHeight = (height * 2 + headSpace) * countY + bleed * 2 * (countY - 1);
                 // pirmā puse
